@@ -1,6 +1,7 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt6.uic import loadUi
+
 from models.vote_model import VoteModel
 from services.file_handler import FileHandler
 
@@ -25,14 +26,32 @@ class MainWindow(QMainWindow):
         self.update_label()
 
     def vote_john(self) -> None:
-        """Handle vote for John."""
+        """Handle vote for John with validation."""
+        name = self.nameInput.text().strip()
+
+        if not name:
+            QMessageBox.warning(self, "Error", "Please enter your name before voting.")
+            return
+
         self.model.vote_john()
         self.save_and_update()
 
+        QMessageBox.information(self, "Vote Recorded", f"{name} voted for John")
+        self.nameInput.clear()
+
     def vote_jane(self) -> None:
-        """Handle vote for Jane."""
+        """Handle vote for Jane with validation."""
+        name = self.nameInput.text().strip()
+
+        if not name:
+            QMessageBox.warning(self, "Error", "Please enter your name before voting.")
+            return
+
         self.model.vote_jane()
         self.save_and_update()
+
+        QMessageBox.information(self, "Vote Recorded", f"{name} voted for Jane")
+        self.nameInput.clear()
 
     def reset_votes(self) -> None:
         """Reset all votes."""
@@ -41,9 +60,12 @@ class MainWindow(QMainWindow):
 
     def save_and_update(self) -> None:
         """Save votes and update label."""
-        john, jane, _ = self.model.get_results()
-        FileHandler.save(john, jane)
-        self.update_label()
+        try:
+            john, jane, _ = self.model.get_results()
+            FileHandler.save(john, jane)
+            self.update_label()
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to save data:\n{e}")
 
     def update_label(self) -> None:
         """Update result label text."""

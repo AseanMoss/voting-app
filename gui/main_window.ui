@@ -14,7 +14,14 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,1">
+    <item>
+     <widget class="QLineEdit" name="nameInput">
+      <property name="text">
+       <string>Enter your name</string>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QPushButton" name="resetBtn">
       <property name="text">
