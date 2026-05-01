@@ -1,4 +1,4 @@
-# Voting app )PyQt6)
+# Voting app (PyQt6)
 
 ## Description
 This is a GUI voting application buiilt using PyQt6. Useres can vote for john or jane, reset votes, and results are saved to a CSV file.
